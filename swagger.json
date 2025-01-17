@@ -1,0 +1,599 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API description",
+        "version": "1.0.0",
+        "description": "API para exemplificação do uso go pgr.pass"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "paths": {
+        "/account/login": {
+            "post": {
+                "summary": "Login de usuário",
+                "description": "Autentica um usuário e gera um token JWT",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "walteralexandresantana@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "WalterSan123@"
+                                    },
+                                    "device": {
+                                        "type": "string",
+                                        "example": "SANGUNG-S10"
+                                    }
+                                },
+                                "required": ["email", "password", "device"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login bem-sucedido e token gerado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Login bem-sucedido"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Credenciais inválidas"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/account/signup": {
+            "post": {
+                "summary": "Criação de usuário",
+                "description": "Registra um novo usuário na aplicação",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "alice@example.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+244930626436"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Alice"
+                                    },
+                                    "province": {
+                                        "type": "string",
+                                        "example": "Luanda"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Rua 123"
+                                    },
+                                    "gender": {
+                                        "type": "string",
+                                        "example": "female"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "example": "1990-01-01"
+                                    },
+                                    "pass": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "device": {
+                                        "type": "string",
+                                        "example": "Chrome - Linux"
+                                    },
+                                    "verify": {
+                                        "type": "string",
+                                        "example": "phone"
+                                    }
+                                },
+                                "required": ["email", "phone" , "name", "pass", "device", "verify"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usuário criado com sucesso"
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "alice@example.com"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Alice"
+                                                },
+                                                "device": {
+                                                    "type": "string",
+                                                    "example": "Chrome - Linux"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro interno do servidor"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/account/resend": {
+            "post": {
+                "summary": "Enviar código de autenticação",
+                "description": "Vericar se o código de autenticação é válido (6 digitos)",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "remember": {
+                                        "type": "string",
+                                        "example": "+244930626436"
+                                    },
+                                    "verify": {
+                                        "type": "string",
+                                        "example": "phone"
+                                    }
+                                },
+                                "required": ["remember", "verify"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/account/oauth": {
+            "post": {
+                "summary": "Autotincacação de usuário com oAuth",
+                "description": "Vericar se o código de autenticação é válido (6 digitos)",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "000000"
+                                    }
+                                },
+                                "required": ["code"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/account/reset": {
+            "post": {
+                "summary": "Autotincacação de usuário com oAuth",
+                "description": "Vericar se o código de autenticação é válido (6 digitos)",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "pass": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "required": ["pass"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/protected": {
+            "post": {
+                "summary": "Rota protegida",
+                "description": "Exemplo de uma rota protegida onde é necessário um token JWT válido",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "example": "5"
+                                    }
+                                },
+                                "required": ["id"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Dados acessados com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Acesso concedido"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Token inválido ou ausente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token inválido ou ausente"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api": {
+            "get": {
+                "summary": "Rota que retorna uma lista de dados",
+                "description": "Retorna uma lista de dados acessível publicamente",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rota acessada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro interno do servidor"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/task/list": {
+            "get": {
+                "summary": "Autotincacação de usuário com oAuth",
+                "description": "Vericar se o código de autenticação é válido (6 digitos)",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "limit": {
+                                        "type": "string",
+                                        "example": "10"
+                                    },
+                                    "offser": {
+                                        "type": "string",
+                                        "example": "0"
+                                    }
+                                },
+                                "required": ["limit", "offser"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/account/profile": {
+    "get": {
+    "summary": "Obter perfil do usuário",
+    "description": "Retorna as informações do perfil do usuário",
+    "security": [
+        {
+        "bearerAuth": []
+        }
+    ],
+    "responses": {
+        "200": {
+        "description": "Perfil do usuário retornado com sucesso",
+        "content": {
+            "application/json": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                "user": {
+                    "type": "object",
+                    "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "alice@example.com"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Alice"
+                    },
+                    "image": {
+                        "type": "string",
+                        "example": "profile.jpg"
+                    }
+                    }
+                }
+                }
+            }
+            }
+        }
+        },
+        "404": {
+        "description": "Usuário não encontrado",
+        "content": {
+            "application/json": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Usuário não encontrado"
+                }
+                }
+            }
+            }
+        }
+        },
+        "500": {
+        "description": "Erro interno do servidor",
+        "content": {
+            "application/json": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Erro interno do servidor"
+                }
+                }
+            }
+            }
+        }
+        }
+    }
+    }
+},
+        "/api/task/add": {
+            "post": {
+                "summary": "Autotincacação de usuário com oAuth",
+                "description": "Vericar se o código de autenticação é válido (6 digitos)",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id_recipient": {
+                                        "type": "string",
+                                        "example": "212202432956788905180431"
+                                    },
+                                    "recipient": {
+                                        "type": "string",
+                                        "example": "Walter Santana"
+                                   },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "```markdown\nExemplo de uma descrição em Markdown\n```"
+                                    },
+                                    "level": {
+                                        "type": "string",
+                                        "example": "em curso"
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "example": "50000"
+                                    },
+                                    "localization":
+                                    {
+                                        "type": "string",
+                                        "example": "Luanda"
+                                    }
+                                },
+                                "required": ["id_recipient","recipient", "description", "level", "value", "localization"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        }
+    }
+}

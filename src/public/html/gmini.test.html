@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Form</title>
+</head>
+<body>
+    <form onsubmit="quest(); return false">
+        <label for="userInput">Enter your question:</label>
+        <input type="text" id="userInput" name="userInput" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="content"></div>
+
+    <script>
+        async function quest(){
+            const userInput = document.getElementById('userInput').value;
+
+            try {
+                const response = await fetch('http://localhost:3002/api/v1/morning/quest', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt: userInput })
+                });
+
+                // alert(response.status);
+                const data = await response.json();
+                document.getElementById('content').innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+    </script>
+</body>
+</html>
