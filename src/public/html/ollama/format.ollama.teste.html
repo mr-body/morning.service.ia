@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    async function fetchData() {
+        const response = await fetch('http://localhost:11434/api/generate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "llama3",
+                prompt: "What color is the sky at different times of the day? Respond using JSON",
+                format: "json",
+                stream: false
+            })
+        });
+        const data = await response.json();
+        const result = JSON.parse(data.response);
+        document.getElementById('result').innerText = JSON.stringify(result, null, 2);
+    }
+
+    window.onload = fetchData;
+</script>
+
+<pre id="result"></pre>
