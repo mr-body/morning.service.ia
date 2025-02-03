@@ -3,7 +3,7 @@ const path = require('path');
 const readline = require('readline');
 
 // Caminho do arquivo JSON
-const filePath = path.join(__dirname, '../knowledge.json');
+const filePath = path.join(__dirname, '../src/knowledges/knowledges.json');
 
 // Interface de readline
 const rl = readline.createInterface({

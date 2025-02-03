@@ -47,7 +47,7 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(3000, () => {
+server.listen(3003, () => {
   console.log(`Servidor rodando em http://localhost:3000`);
   console.log(`Documentação Swagger disponível em http://localhost:3000/api-docs`);
 });

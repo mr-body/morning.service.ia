@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import dotenv from "dotenv";
 import GenerativeAI from "../service/morning.gmini.service";
+import DeepSearch from "../service/morning.deep.search.service";
 import knowledge from "../knowledges/knowledge.json";
 
 dotenv.config();
@@ -15,11 +16,12 @@ export const morning = async (req: Request, res: Response): Promise<void> => {
     }
 
     const generateAIResponse = new GenerativeAI(apiKey);
+    const deepSearch = new DeepSearch(knowledge);
 
     try {
+        const archive = deepSearch.findSimilarity(userInput);
         const response = await generateAIResponse.question(userInput, knowledge);
-        console.log(response);
-        res.status(200).json({ response });
+        res.status(200).json({ response, archive });
     } catch (error) {
         res.status(500).json({ error: "Failed to generate AI response" });
     }

@@ -1,11 +1,16 @@
 [
     {
-        "knowledge": "gildo komba e um estudante de engenharia de software da escola 42 Luanda"
+        "knowledge": "gildo komba e um estudante de engenharia de software da escola 42 Luanda",
+        "keywords": ["gildo komba", "estudante", "engenharia de software", "escola 42", "Luanda"]
     },
     {
-        "knowledge": "jeje e presidente de angola"
+        "knowledge": "jeje e presidente de angola",
+        "keywords": ["jeje", "presidente", "angola"],
+        "image": "https://www.google.com",
+        "video": "https://www.google.com"
     },
     {
-        "knowledge": "angola e o pais com maior numero de abitantes do mundo"
+        "knowledge": "angola e o pais com maior numero de abitantes do mundo",
+        "keywords": ["angola", "pais", "maior numero de habitantes", "mundo"]
     }
 ]
