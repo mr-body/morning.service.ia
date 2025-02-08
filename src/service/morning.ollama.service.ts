@@ -62,8 +62,6 @@ class Ollama {
             images: null
         });
 
-        console.log('Prompt:', prompt);
-        console.log('Data:', data);
 
         const config = {
             model: 'llama3',

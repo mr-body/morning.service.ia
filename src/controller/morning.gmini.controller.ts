@@ -18,8 +18,10 @@ export const morning = async (req: Request, res: Response): Promise<void> => {
     const generateAIResponse = new GenerativeAI(apiKey);
     const deepSearch = new DeepSearch(knowledge);
 
+    const archive = deepSearch.findSimilarity(userInput);
+    console.log(archive);
+
     try {
-        const archive = deepSearch.findSimilarity(userInput);
         const response = await generateAIResponse.question(userInput, knowledge);
         res.status(200).json({ response, archive });
     } catch (error) {

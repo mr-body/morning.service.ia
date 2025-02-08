@@ -27,9 +27,18 @@
                     body: JSON.stringify({ prompt: userInput })
                 });
 
-                // alert(response.status);
-                const data = await response.json();
-                document.getElementById('content').innerText = JSON.stringify(data, null, 2);
+                if(response.status == 200){
+                    const data = await response.json();
+                    document.getElementById('content').innerText = JSON.stringify(data, null, 2);
+                }
+                else if(response.status == 429){
+                    document.getElementById('content').innerText = "Too many requests! Please try again later.";
+                }
+                else if(response.status == 500){
+                    document.getElementById('content').innerText = 'Internal server error! Please try again later.';
+                }
+
+               
             } catch (error) {
                 console.error('Error fetching data:', error);
             }

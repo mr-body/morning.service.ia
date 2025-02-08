@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Response Display</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet" />
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
 </head>
 
 <body>
@@ -35,7 +32,7 @@
             responsesDiv.innerHTML = '';  // Limpa as respostas anteriores
 
             try {
-                const responseStream = await fetch('http://localhost:3000/api/v2/morning/quest', {
+                const responseStream = await fetch('http://localhost:3003/api/v2/morning/quest', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: question }),
@@ -64,18 +61,22 @@
                                 const responseElement = document.createElement('div');
                                 responseElement.classList.add('response');
 
-                                // Processa Markdown e destaca código
                                 responseElement.innerHTML = completeResponse;
                                 responsesDiv.innerHTML = ''; // Limpa as respostas antigas
                                 responsesDiv.appendChild(responseElement);
 
-                                // Realça blocos de código adicionados
-                                Prism.highlightAll();
+                            }
+                            if (json.archive) {
+                                const archiveElement = document.createElement('div');
+                                archiveElement.classList.add('archive');
+                                archiveElement.innerHTML = `<strong>Archive:</strong> ${JSON.stringify(json.archive)}`;
+                                responsesDiv.appendChild(archiveElement);
                             }
                             if (json.done) {
                                 return;
                             }
                         } catch (error) {
+
                             console.error('Erro ao decodificar JSON:', line);
                         }
                     }
@@ -85,5 +86,5 @@
             }
         });
     </script>
-</body >
-</html >
+</body>
+</html>
