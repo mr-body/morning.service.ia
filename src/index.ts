@@ -31,7 +31,7 @@ app.use('/api/v1/morning', morningGminiRoutes);
 app.use('/api/v2/morning', morningOllamaRoutes);
 
 app.get('/', (_, res: Response) => {
-  res.sendFile(path.join(__dirname, 'public/html/index.html'));
+  res.sendFile(path.join(__dirname, 'public/html/gmini.test.html'));
 });
 
 app.set('io', io);
