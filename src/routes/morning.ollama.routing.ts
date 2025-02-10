@@ -11,7 +11,7 @@ const limiter = rateLimit({
     // keyGenerator: (req) => req.user?.id || req.ip, // Limita por ID do usuário autenticado (se existir)
 });
 
-morningOllamaRoutes.use(limiter);
+// morningOllamaRoutes.use(limiter);
 morningOllamaRoutes.post("/quest", morning);
 
 export default morningOllamaRoutes;
