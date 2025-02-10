@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "NODE_OPTIONS='--max-old-space-size=4096' ts-node src/index.ts",
     "build": "tsc",
-    "serve": "node dist/index.js",
-    "dev": "nodemon"
+    "serve": "node --max-old-space-size=4096 dist/index.js",
+    "dev": "NODE_OPTIONS='--max-old-space-size=4096' nodemon"
   },
   "author": "",
   "license": "ISC",
