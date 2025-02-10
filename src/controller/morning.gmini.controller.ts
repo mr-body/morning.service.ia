@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import GenerativeAI from "../service/morning.gmini.service";
 import DeepSearch from "../service/morning.deep.search.service";
 import knowledge from "../knowledges/knowledge.json";
+import { sendWhatsapp } from "../module/twilio.module";
 
 dotenv.config();
 
@@ -19,7 +20,6 @@ export const morning = async (req: Request, res: Response): Promise<void> => {
     const deepSearch = new DeepSearch(knowledge);
 
     const archive = deepSearch.findSimilarity(userInput);
-    console.log(archive);
 
     try {
         const response = await generateAIResponse.question(userInput, knowledge);
@@ -27,4 +27,23 @@ export const morning = async (req: Request, res: Response): Promise<void> => {
     } catch (error) {
         res.status(500).json({ error: "Failed to generate AI response" });
     }
+}
+
+export const whatsapp_ai = async (req: Request, res: Response): Promise<void> => {
+    const messageBody = req.body.Body;
+    const senderNumber = req.body.From;
+
+    const apiKey = process.env.GOOGLE_API_KEY;
+    if (!apiKey) {
+        res.status(500).json({ error: "API key is not defined" });
+        return;
+    }
+
+    const generateAIResponse = new GenerativeAI(apiKey);
+
+    const response = await generateAIResponse.question(messageBody, knowledge);
+
+    sendWhatsapp(senderNumber, response);
+
+    res.send('<Response></Response>'); // Responde com um XML vazio para Twilio
 }

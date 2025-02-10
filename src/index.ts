@@ -25,6 +25,10 @@ app.use(helmet());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
+
+app.set('trust proxy', 1);
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/api/v1/morning', morningGminiRoutes);
@@ -48,6 +52,6 @@ io.on('connection', (socket) => {
 });
 
 server.listen(3003, () => {
-  console.log(`Servidor rodando em http://localhost:3000`);
-  console.log(`Documentação Swagger disponível em http://localhost:3000/api-docs`);
+  console.log(`Servidor rodando em http://localhost:3003`);
+  console.log(`Documentação Swagger disponível em http://localhost:3003/api-docs`);
 });
