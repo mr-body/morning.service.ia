@@ -51,7 +51,6 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(3003, () => {
-  console.log(`Servidor rodando em http://localhost:3003`);
-  console.log(`Documentação Swagger disponível em http://localhost:3003/api-docs`);
+server.listen(3000, () => {
+  console.log(`Assistentes de IA rodando em http://localhost:3000`);
 });
