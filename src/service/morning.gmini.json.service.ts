@@ -38,17 +38,31 @@ class PromptAI {
             description: "List of recipes",
             type: SchemaType.ARRAY,
             items: {
-              type: SchemaType.OBJECT,
-              properties: {
-                recipeName: {
-                  type: SchemaType.STRING,
-                  description: "Name of the recipe",
-                  nullable: false,
+                type: SchemaType.OBJECT,
+                properties: {
+                    recipeName: {
+                        type: SchemaType.STRING,
+                        description: "Name of the recipe",
+                        nullable: false,
+                    },
+                    nacionalidade: {
+                        type: SchemaType.STRING,
+                        description: "nacionalidade da receita",
+                        nullable: false,
+                    },
+                    igredientes: {
+                        type: SchemaType.ARRAY,
+                        description: "List of ingredients",
+                        items: {
+                            type: SchemaType.STRING,
+                        },
+                        nullable: false,
+                    },
+
                 },
-              },
-              required: ["recipeName"],
+                required: ["recipeName", "nacionalidade", "igredientes"],
             },
-          };
+        };
 
         const generationConfig = {
             temperature: 1,
