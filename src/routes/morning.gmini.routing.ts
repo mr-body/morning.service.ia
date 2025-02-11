@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { morning, whatsapp_ai } from "../controller/morning.gmini.controller";
+import { morning_prompt, morning_whatsapp, morning_quest} from "../controller/morning.gmini.controller";
 import rateLimit from "express-rate-limit";
 
 const morningGminiRoutes = Router();
@@ -12,7 +12,8 @@ const limiter = rateLimit({
 });
 
 // morningGminiRoutes.use(limiter);
-morningGminiRoutes.post("/quest", morning);
-morningGminiRoutes.post("/webhook", whatsapp_ai);
+morningGminiRoutes.post("/quest", morning_quest);
+morningGminiRoutes.post("/prompt", morning_prompt);
+morningGminiRoutes.post("/webhook", morning_whatsapp);
 
 export default morningGminiRoutes;
